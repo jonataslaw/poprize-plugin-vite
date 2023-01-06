@@ -1,0 +1,1 @@
+# poprize-plugin-vite
