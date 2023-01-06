@@ -1,0 +1,36 @@
+{
+  "name": "@poprize/plugin-vite",
+  "version": "1.1.1",
+  "private": false,
+  "scripts": {
+    "dev": "scripts/bundle.ts --dev",
+    "build": "scripts/bundle.ts",
+    "test": "playwright test",
+    "prettier": "pnpm prettier-ci --write",
+    "prettier-ci": "prettier --cache --ignore-path=.gitignore --check '**/*.{js,jsx,ts,tsx,html,css,json,md,yml}'",
+    "ci": "tsc && pnpm prettier-ci && pnpm build && cd playground && tsc && cd .. && pnpm test",
+    "release": "scripts/release.ts"
+  },
+  "prettier": {
+    "trailingComma": "all"
+  },
+  "dependencies": {
+    "@swc/core": "^1.3.24"
+  },
+  "peerDependencies": {
+    "vite": "^4"
+  },
+  "devDependencies": {
+    "@nabla/tnode": "^0.8.0",
+    "@playwright/test": "^1.29.1",
+    "@types/fs-extra": "^9.0.13",
+    "@types/node": "^18.11.18",
+    "esbuild": "^0.16.12",
+    "fs-extra": "^11.1.0",
+    "picocolors": "^1.0.0",
+    "prettier": "^2.8.1",
+    "shelljs": "^0.8.5",
+    "typescript": "^4.9.4",
+    "vite": "^4.0.3"
+  }
+}
