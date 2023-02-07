@@ -18,7 +18,7 @@ var react = (options = {
     apply: "serve",
     config: () => ({
       esbuild: false,
-      optimizeDeps: { include: ["@poprize/react/jsx-dev-runtime"] }
+      optimizeDeps: { include: [`${options.jsxImportSource}/jsx-dev-runtime`] }
     }),
     resolveId: (id) => id === runtimePublicPath ? id : void 0,
     load: (id) => id === runtimePublicPath ? readFileSync(join(_dirname, "refresh-runtime.js"), "utf-8") : void 0,
@@ -44,7 +44,7 @@ var react = (options = {
       let result;
       try {
         if (isTsx || isJsx) {
-          code = `import { jsx, Fragment } from "@poprize/react/jsx-runtime";
+          code = `import { jsx, Fragment } from "${options.jsxImportSource}/jsx-runtime";
 ` + code;
         }
         result = await transform(code, {
@@ -115,11 +115,10 @@ import(/* @vite-ignore */ import.meta.url).then((currentExports) => {
     apply: "build",
     config: () => ({
       esbuild: {
-        jsx: "automatic",
         jsxInject: `import { jsx, Fragment } from '${options == null ? void 0 : options.jsxImportSource}/jsx-runtime'`,
-        pragma: "jsx",
-        pragmaFrag: "Fragment",
-        runtime: "classic",
+        jsx: "transform",
+        jsxFactory: "jsx",
+        jsxFragment: "Fragment",
         jsxImportSource: options == null ? void 0 : options.jsxImportSource,
         tsconfigRaw: { compilerOptions: { useDefineForClassFields: true } }
       }

@@ -1,7 +1,7 @@
 {
   "name": "@poprize/plugin-vite",
   "description": "Poprize react with SWC",
-  "version": "1.1.1",
+  "version": "1.2.2",
   "author": "Jonatas Borges (https://github.com/jonataslaw)",
   "license": "MIT",
   "private": false,
@@ -29,6 +29,6 @@
     "vite": "^4"
   },
   "dependencies": {
-    "@swc/core": "^1.3.24"
+    "@swc/core": "^1.3.25"
   }
 }

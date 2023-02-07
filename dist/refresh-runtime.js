@@ -111,7 +111,9 @@ function performReactRefresh() {
     });
     let update = {
       updatedFamilies,
+      // Families that will re-render preserving state
       staleFamilies
+      // Families that will be remounted
     };
     helpersByRendererID.forEach(function(helpers) {
       helpers.setRefreshHandler(resolveFamily);
@@ -293,8 +295,8 @@ function injectIntoGlobalHook(globalObject) {
       let current = root.current;
       let alternate = current.alternate;
       if (alternate !== null) {
-        let wasMounted = alternate.memoizedState != null && alternate.memoizedState.element != null;
-        let isMounted = current.memoizedState != null && current.memoizedState.element != null;
+        let wasMounted = alternate.hook.memoizedState != null && alternate.hook.memoizedState.element != null;
+        let isMounted = current.hook.memoizedState != null && current.hook.memoizedState.element != null;
         if (!wasMounted && isMounted) {
           mountedRoots.add(root);
           failedRoots.delete(root);
@@ -344,7 +346,7 @@ function isLikelyComponentType(type) {
   switch (typeof type) {
     case "function": {
       if (type.prototype != null) {
-        if (type.prototype.isReactComponent) {
+        if (type.prototype.render) {
           return true;
         }
         const ownNames = Object.getOwnPropertyNames(type.prototype);
