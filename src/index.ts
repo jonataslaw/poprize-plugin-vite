@@ -36,7 +36,7 @@ const react = (
     apply: "serve",
     config: () => ({
       esbuild: false,
-      optimizeDeps: { include: ["@poprize/react/jsx-dev-runtime"] },
+      optimizeDeps: { include: [`${options.jsxImportSource}/jsx-dev-runtime`] },
     }),
     resolveId: (id) => (id === runtimePublicPath ? id : undefined),
     load: (id) =>
@@ -73,7 +73,7 @@ const react = (
       try {
         if (isTsx || isJsx) {
           code =
-            `import { jsx, Fragment } from "@poprize/react/jsx-runtime";\n` +
+            `import { jsx, Fragment } from "${options.jsxImportSource}/jsx-runtime";\n` +
             code;
         }
 
@@ -148,13 +148,10 @@ import(/* @vite-ignore */ import.meta.url).then((currentExports) => {
     apply: "build",
     config: () => ({
       esbuild: {
-        jsx: "automatic",
-        // jsxFactory: "_jsx",
-        // jsxFragment: "_jsxFragment",
         jsxInject: `import { jsx, Fragment } from '${options?.jsxImportSource}/jsx-runtime'`,
-        pragma: "jsx",
-        pragmaFrag: "Fragment",
-        runtime: "classic",
+        jsx: "transform",
+        jsxFactory: "jsx",
+        jsxFragment: "Fragment",
         jsxImportSource: options?.jsxImportSource,
         tsconfigRaw: { compilerOptions: { useDefineForClassFields: true } },
       },

@@ -452,11 +452,11 @@ export function injectIntoGlobalHook(globalObject) {
       // If this breaks with some refactoring, you'll want to update DevTools too.
       if (alternate !== null) {
         let wasMounted =
-          alternate.memoizedState != null &&
-          alternate.memoizedState.element != null;
+          alternate.hook.memoizedState != null &&
+          alternate.hook.memoizedState.element != null;
         let isMounted =
-          current.memoizedState != null &&
-          current.memoizedState.element != null;
+          current.hook.memoizedState != null &&
+          current.hook.memoizedState.element != null;
 
         if (!wasMounted && isMounted) {
           // Mount a new root.
@@ -557,7 +557,7 @@ function isLikelyComponentType(type) {
     case "function": {
       // First, deal with classes.
       if (type.prototype != null) {
-        if (type.prototype.isReactComponent) {
+        if (type.prototype.render) {
           // React class.
           return true;
         }
